@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import { toast, Toaster } from "react-hot-toast";
+import { ArrowLeft } from "lucide-react";
 
 export default function AddArticlePage() {
   const router = useRouter();
@@ -16,11 +16,30 @@ export default function AddArticlePage() {
     date: new Date().toISOString().split("T")[0],
   });
 
-  // check login
-  const auth = Cookies.get("auth");
-  if (!auth || auth !== "true") {
-    router.push("/login");
-    return null;
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    fetch("/api/status")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!mounted) return;
+        if (!data.auth) {
+          router.push("/login");
+        } else {
+          setCheckingAuth(false);
+        }
+      })
+      .catch(() => router.push("/login"));
+    return () => (mounted = false);
+  }, [router]);
+
+  if (checkingAuth) {
+    return (
+      <div className="py-20 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
   }
 
   const handleChange = (e) => {
@@ -58,6 +77,14 @@ export default function AddArticlePage() {
     <section className="max-w-3xl mx-auto py-20 px-6">
       {/* Toast Container */}
       <Toaster position="top-center" reverseOrder={false} />
+
+      {/* Back Button */}
+      <button
+        onClick={() => router.back()}
+        className="flex items-center gap-2 mb-6 text-orange-600 hover:text-orange-800 font-medium"
+      >
+        <ArrowLeft className="w-5 h-5" /> <span>Back</span>
+      </button>
 
       <h1 className="text-3xl font-bold mb-6">Add New Article</h1>
 

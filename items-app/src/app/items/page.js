@@ -17,12 +17,20 @@ export default function ArticlesPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="py-20 text-center text-gray-500">
+  return (
+    <div className="py-20 flex flex-col items-center justify-center gap-4">
+      
+      {/* Spinner */}
+      <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+      
+      {/* Loading Text */}
+      <p className="text-gray-500 text-lg font-medium">
         Loading articles...
-      </div>
-    );
-  }
+      </p>
+    </div>
+  );
+}
+
 
   return (
     <section className="bg-[#fbf7f2] py-20 px-6">

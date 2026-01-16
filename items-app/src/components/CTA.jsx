@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const CTA = () => {
   return (
     <section className="bg-[#fbf7f2] py-20 px-6">
@@ -13,13 +15,13 @@ const CTA = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="bg-orange-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-orange-600 transition">
+          <Link href="/add-item" className="bg-orange-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-orange-600 transition">
             Start Writing
-          </button>
+          </Link>
 
-          <button className="border border-gray-300 px-8 py-3 rounded-xl font-semibold text-gray-700 hover:bg-gray-100 transition">
+          <Link href="/items" className="border border-gray-300 px-8 py-3 rounded-xl font-semibold text-gray-700 hover:bg-gray-100 transition">
             Explore Articles
-          </button>
+          </Link>
         </div>
       </div>
     </section>

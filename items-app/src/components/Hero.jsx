@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Hero = () => {
@@ -17,10 +18,9 @@ const Hero = () => {
           </p>
 
           <div className="flex gap-4 justify-center">
-            <button className="bg-orange-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-orange-600 transition">
+            <Link href="/items" className="bg-orange-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-orange-600 transition">
               Start Reading →
-            </button>
-            
+            </Link>
           </div>
         </div>
       </section>

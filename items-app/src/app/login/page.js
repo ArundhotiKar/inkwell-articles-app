@@ -1,60 +1,87 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("from") || "/";
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (email === "admin@gmail.com" && password === "123456") {
-      Cookies.set("auth", "true", { expires: 1, path: "/" });
-      router.push("/items");
-    } else {
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
+        // cookie is readable; redirect
+        window.location.href = redirectTo;
+        return;
+      }
+
       setError("Invalid email or password");
+    } catch (err) {
+      console.error(err);
+      setError("Network error");
     }
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-100 to-orange-200 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <h1 className="text-3xl font-bold text-center text-orange-600 mb-6">
+          Welcome Back
+        </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-2"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border p-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="text-sm text-gray-600">Email</label>
+            <input
+              type="email"
+              placeholder="pallobi@gmail.com"
+              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        <button className="w-full bg-black text-white p-2">Login</button>
-        {error && <p className="text-red-500">{error}</p>}
-      </form>
+          <div>
+            <label className="text-sm text-gray-600">Password</label>
+            <input
+              type="password"
+              placeholder="••••••"
+              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-      <hr className="my-4" />
+          {error && (
+            <p className="text-sm text-red-500 text-center">{error}</p>
+          )}
 
-      {/* ✅ Google Login Button */}
-      <button
-        className="w-full bg-blue-600 text-white p-2"
-        onClick={() => signIn("google")}
-      >
-        Login with Google
-      </button>
+          <button
+            type="submit"
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition"
+          >
+            Login
+          </button>
+        </form>
+
+        <p className="text-center text-xs text-gray-400 mt-6">
+          Demo Login: <span className="font-medium">pallobi@gmail.com / 123456</span>
+        </p>
+      </div>
     </div>
   );
 }

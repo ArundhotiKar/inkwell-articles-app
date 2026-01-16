@@ -5,7 +5,7 @@ Simple Next.js (App Router) application demonstrating public pages, mock authent
 ## Features
 - Landing page (7 sections)
 - Navbar with links to `Login` and `Items`
-- Mock authentication (hardcoded `admin@gmail.com` / `123456`) stored in cookies
+- Mock authentication (hardcoded `pallobi@gmail.com` / `123456`) stored in cookies
 - Items list fetched from Express API (`GET /items`)
 - Item details page (`/items/[id]`)
 - Protected Add Item form (POST to Express `POST /items`)
@@ -39,6 +39,24 @@ pnpm dev
 - Express API is at `http://localhost:5000`.
 - The app uses a simple cookie `auth=true` to track login state.
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Google OAuth (NextAuth) setup
+
+1. Create `.env.local` in the project root and fill values (see `.env.local.example`). Do NOT commit secrets.
+
+2. In Google Cloud Console create an OAuth 2.0 Client ID (type: "Web application") and set the Authorized redirect URI to:
+
+	- `http://localhost:3000/api/auth/callback/google`
+
+3. If the OAuth consent screen is in "Testing" mode, add your Google account as a test user.
+
+4. Restart the Next.js dev server after updating `.env.local`:
+
+```bash
+npm run dev
+```
+
+If you see `401 invalid_client` or "The OAuth client was not found", verify the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env.local` are exact and that the client type is "Web application".
 
 ## Getting Started
 

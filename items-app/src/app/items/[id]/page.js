@@ -31,8 +31,21 @@ export default function ArticleDetails() {
     fetchArticle();
   }, [id]);
 
-  if (loading)
-    return <div className="py-20 text-center text-gray-500">Loading...</div>;
+  if (loading) {
+    return (
+      <div className="py-20 flex flex-col items-center justify-center gap-4">
+
+        {/* Spinner */}
+        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+
+        {/* Loading Text */}
+        <p className="text-gray-500 text-lg font-medium">
+          Loading articles...
+        </p>
+      </div>
+    );
+  }
+
 
   if (error)
     return <div className="py-20 text-center text-red-500">{error}</div>;
