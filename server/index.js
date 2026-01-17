@@ -9,7 +9,7 @@ const app = express();
 // Middleware
 // -------------------------
 app.use(cors({
-  origin: "http://localhost:3000", // frontend URL
+  origin: "https://article-blog-client.vercel.app", // frontend URL
   credentials: true,
 }));
 app.use(express.json()); // ✅ only once
@@ -128,5 +128,5 @@ app.post("/api/auth/logout", (req, res) => {
 // Start Server
 // -------------------------
 app.listen(5000, () => {
-  console.log("Server running on http://localhost:5000");
+  console.log("Server running on https://article-blog-server-eight.vercel.app");
 });

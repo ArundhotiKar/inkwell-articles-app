@@ -16,7 +16,7 @@ export default function ArticleDetails() {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/articles/${id}`);
+        const res = await fetch(`https://article-blog-server-eight.vercel.app/articles/${id}`);
         if (!res.ok) throw new Error("Article not found");
         const data = await res.json();
         setArticle(data);

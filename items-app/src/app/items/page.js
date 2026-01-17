@@ -8,7 +8,7 @@ export default function ArticlesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/articles")
+    fetch("https://article-blog-server-eight.vercel.app/articles")
       .then((res) => res.json())
       .then((data) => {
         setArticles(data);

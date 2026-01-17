@@ -36,7 +36,7 @@ pnpm dev
 - `/add-item` - Protected; requires login cookie
 
 ## Notes
-- Express API is at `http://localhost:5000`.
+- Express API is at `https://article-blog-server-eight.vercel.app`.
 - The app uses a simple cookie `auth=true` to track login state.
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
