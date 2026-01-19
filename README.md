@@ -3,6 +3,8 @@
 A simple **Next.js (App Router) application** demonstrating public pages, mock authentication, and an Express API for managing articles. Perfect for learning **full-stack development** with Next.js and Express.
 
 ---
+## Live Demo
+[View Live Project](https://article-blog-client.vercel.app/)
 
 ## 🔹 Features
 - Landing page with **7 content sections**
